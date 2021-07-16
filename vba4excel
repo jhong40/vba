@@ -3,12 +3,16 @@ Private Sub CommandButton1_Click()
     Range("A1").Value = "Hello"
     Range("A2").Value = "Hello"
     
+    ''''''''''''''''''''''''''''''''''''''
+    ' Download file from URL
+    ''''''''''''''''''''''''''''''''''''''
+    
     Dim myurl As String
     myurl = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
     
     Dim fpath As String
-    fpath = "c:\temp\mytest.pdf"
-    
+    'fpath = "c:\temp\mytest.pdf"
+    fpath = CreateObject("WScript.Shell").SpecialFolders("MyDocuments") & "\mytest.pdf"
     
     Dim WinHttpReq As Object: Set WinHttpReq = CreateObject("MSXML2.ServerXMLHTTP.6.0")
         'CreateObject ("Microsoft.XMLHTTP")
@@ -25,5 +29,7 @@ Private Sub CommandButton1_Click()
             oStream.SaveToFile fpath, Abs(CInt(True)) + 1
             oStream.Close
     End If
+    
 
 End Sub
+
