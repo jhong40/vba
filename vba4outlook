@@ -1,0 +1,35 @@
+Private WithEvents myOlItems  As Outlook.Items
+
+Private Sub Application_Startup()
+'MsgBox ("bbb 111")
+    Dim olApp As Outlook.Application
+    Dim objNS As Outlook.NameSpace
+      Set olApp = Outlook.Application
+      Set objNS = olApp.GetNamespace("MAPI")
+      Set myOlItems = objNS.GetDefaultFolder(olFolderInbox).Items
+End Sub
+
+Private Sub myOlItems_ItemAdd(ByVal item As Object)
+
+'MsgBox "Message coming 1...."
+Dim envstr As String
+
+On Error GoTo ErrorHandler
+  Dim Msg As Outlook.MailItem
+  
+  If TypeName(item) = "MailItem" Then
+    Set Msg = item
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    If Msg.Sender = "your name" And Msg.Subject = "mystuff" Then
+      'MsgBox Msg.Subject
+      
+	End If
+  End If  'end mailitem
+       
+ProgramExit:
+  Exit Sub
+ErrorHandler:
+  'MsgBox Err.Number & " - " & Err.Description
+  Resume ProgramExit
+End Sub
+
