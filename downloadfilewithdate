@@ -1,0 +1,44 @@
+Private Sub CommandButton1_Click()
+
+    Range("A1").Value = "Hello"
+    Range("A2").Value = "Hello"
+    
+    ''''''''''''''''''''''''''''''''''''''
+    ' Download file from URL
+    ''''''''''''''''''''''''''''''''''''''
+    
+    Dim myurl As String
+    myurl = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+    
+    Dim fpath As String
+    'fpath = "c:\temp\mytest.pdf"
+    
+    Dim iNow
+    Dim d(1 To 6)
+    iNow = Now
+    d(1) = Year(iNow)
+    d(2) = Month(iNow)
+    d(3) = Day(iNow)
+    d(4) = Hour(iNow)
+    d(5) = Minute(iNow)
+    'fpath = CreateObject("WScript.Shell").SpecialFolders("MyDocuments") & "\mytest.pdf"
+    fpath = CreateObject("WScript.Shell").SpecialFolders("MyDocuments") & "\mytest" & d(1) & "-" & d(2) & "-" & d(3) & "-" & d(4) & "-" & d(5) & ".pdf"
+    
+    Dim WinHttpReq As Object: Set WinHttpReq = CreateObject("MSXML2.ServerXMLHTTP.6.0")
+        'CreateObject ("Microsoft.XMLHTTP")
+        'CreateObject("MSXML2.ServerXMLHTTP.6.0")
+    
+    WinHttpReq.Open "GET", myurl, False
+    WinHttpReq.send
+
+    If WinHttpReq.Status = 200 Then
+            Dim oStream         As Object: Set oStream = CreateObject("ADODB.Stream")
+            oStream.Open
+            oStream.Type = 1
+            oStream.Write WinHttpReq.responseBody
+            oStream.SaveToFile fpath, Abs(CInt(True)) + 1
+            oStream.Close
+    End If
+    
+
+End Sub
