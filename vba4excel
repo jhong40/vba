@@ -1,0 +1,29 @@
+Private Sub CommandButton1_Click()
+
+    Range("A1").Value = "Hello"
+    Range("A2").Value = "Hello"
+    
+    Dim myurl As String
+    myurl = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+    
+    Dim fpath As String
+    fpath = "c:\temp\mytest.pdf"
+    
+    
+    Dim WinHttpReq As Object: Set WinHttpReq = CreateObject("MSXML2.ServerXMLHTTP.6.0")
+        'CreateObject ("Microsoft.XMLHTTP")
+        'CreateObject("MSXML2.ServerXMLHTTP.6.0")
+    
+    WinHttpReq.Open "GET", myurl, False
+    WinHttpReq.send
+
+    If WinHttpReq.Status = 200 Then
+            Dim oStream         As Object: Set oStream = CreateObject("ADODB.Stream")
+            oStream.Open
+            oStream.Type = 1
+            oStream.Write WinHttpReq.responseBody
+            oStream.SaveToFile fpath, Abs(CInt(True)) + 1
+            oStream.Close
+    End If
+
+End Sub
