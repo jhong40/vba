@@ -1,4 +1,5 @@
-   ' Test3 https://collegeadmissions.uchicago.edu/files/documents/visitor-map.pdf
+   ' https://collegeadmissions.uchicago.edu/files/documents/visitor-map.pdf
+   ' https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf
    
    If Msg.Sender = "FirstN, LastN" And Msg.Subject = "potato" Then
       MsgBox Msg.Body
