@@ -5,7 +5,8 @@
           
       ''' Parse the body, find the URL Link
       Set Reg2 = New RegExp
-      Reg2.Pattern = "https?:\/\/[a-z]+\.[a-z]+\.[a-z]+(/[a-z|0-9|\-|\.]+)*"
+      'Reg2.Pattern = "https?:\/\/[a-z]+\.[a-z]+\.[a-z]+(/[a-z|0-9|\-|\.]+)*"
+      Reg2.Pattern = "https?:\/\/[a-z|0-9]+\.[a-z|0-9]+\.[a-z|0-9]+(/[a-z|0-9|\-|\.]+)*"
       Reg2.IgnoreCase = True
       Reg2.Global = False
       
