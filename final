@@ -1,0 +1,55 @@
+   ' Test3 https://collegeadmissions.uchicago.edu/files/documents/visitor-map.pdf
+   
+   If Msg.Sender = "FirstN, LastN" And Msg.Subject = "potato" Then
+      MsgBox Msg.Body
+          
+      ''' Parse the body, find the URL Link
+      Set Reg2 = New RegExp
+      Reg2.Pattern = "https?:\/\/[a-z]+\.[a-z]+\.[a-z]+(/[a-z|0-9|\-|\.]+)*"
+      Reg2.IgnoreCase = True
+      Reg2.Global = False
+      
+      Set matches = Reg2.Execute(Msg.Body)
+      Dim myurl As String
+      Dim fpath As String
+      fpath = CreateObject("WScript.Shell").SpecialFolders("MyDocuments") & "\mytest.pdf"
+      
+      'MsgBox matches.Value
+      For Each Match In matches
+        myurl = Match.Value
+        MsgBox myurl
+      Next Match
+   
+   
+   ''' Download the file from the link
+    Dim WinHttpReq As Object: Set WinHttpReq = CreateObject("MSXML2.ServerXMLHTTP.6.0")
+        'CreateObject ("Microsoft.XMLHTTP")
+        'CreateObject("MSXML2.ServerXMLHTTP.6.0")
+    
+    WinHttpReq.Open "GET", myurl, False
+    WinHttpReq.Send
+
+    If WinHttpReq.Status = 200 Then
+            Dim oStream         As Object: Set oStream = CreateObject("ADODB.Stream")
+            oStream.Open
+            oStream.Type = 1
+            oStream.Write WinHttpReq.responseBody
+            oStream.SaveToFile fpath, Abs(CInt(True)) + 1
+            oStream.Close
+    End If
+         
+          
+          
+     ''' Sending email
+      Set objMsg = Application.CreateItem(olMailItem)
+        With objMsg
+          .To = "mname@mycompany.com"
+          .Subject = "Here is the PDF"
+          .BodyFormat = olFormatPlain  'send plain text message
+          .Body = "Please see attached for the PDF file this week."
+          .Attachments.Add (fpath)
+          .Send
+         End With
+       
+       
+    End If
