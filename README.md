@@ -14,3 +14,5 @@ https://analystcave.com/excel-regex-tutorial/
 ### IE cookie getter and setter
 
 https://stackoverflow.com/questions/39709562/how-to-set-and-get-jsessionid-cookie-in-vba
+https://codingislove.com/http-requests-excel-vba/
+
